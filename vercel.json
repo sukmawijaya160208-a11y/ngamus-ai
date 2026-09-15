@@ -1,0 +1,13 @@
+{
+  "installCommand": "bun install && cd client && bun install",
+  "buildCommand": "cd client && bun run build",
+  "outputDirectory": "client/dist",
+  "rewrites": [
+    { "source": "/api/support/threads", "destination": "/api/support?resource=threads" },
+    { "source": "/api/support/messages", "destination": "/api/support?resource=messages" },
+    { "source": "/api/tools/explain", "destination": "/api/tools/misc?resource=explain" },
+    { "source": "/api/tools/citation", "destination": "/api/tools/misc?resource=citation" },
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

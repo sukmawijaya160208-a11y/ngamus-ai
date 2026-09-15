@@ -1,0 +1,21 @@
+{
+  "name": "ngampus-ai",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Ngampus AI — Asisten belajar mahasiswa Indonesia. Powered by Gemini Flash.",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "install:all": "cd server && npm install && cd ../client && npm install",
+    "setup": "cd server && npm install && cp .env.example .env && cd ../client && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "dependencies": {
+    "@google/genai": "^2.21.0",
+    "@supabase/supabase-js": "^2.115.0"
+  }
+}

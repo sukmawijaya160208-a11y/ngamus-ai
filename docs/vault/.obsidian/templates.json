@@ -1,0 +1,6 @@
+{
+  "command": "daily-notes",
+  "folder": "templates",
+  "format": "YYYY-MM-DD",
+  "template": "templates/daily.md"
+}

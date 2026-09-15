@@ -1,0 +1,16 @@
+{
+  "name": "ngampus-ai-server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend Ngampus AI - Gemini Flash powered college companion",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@google/genai": "^1.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
