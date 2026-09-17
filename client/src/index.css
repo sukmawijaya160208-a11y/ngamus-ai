@@ -6,8 +6,8 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Playfair Display', serif;
+  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Instrument Serif', Georgia, serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   --color-ink-50: #fafaf9;
@@ -270,10 +270,12 @@ body {
    ======================================== */
 
 .font-display {
-  font-family: 'Playfair Display', serif;
-  letter-spacing: -0.02em;
+  font-family: 'Instrument Serif', Georgia, serif;
+  letter-spacing: -0.01em;
+  font-weight: 400;
 }
-.font-serif { font-family: 'Playfair Display', serif; }
+.font-serif { font-family: 'Instrument Serif', Georgia, serif; }
+.font-quote { font-family: 'Newsreader', Georgia, serif; font-style: italic; }
 
 .bg-academic-grid {
   background-image: radial-gradient(rgba(144, 63, 0, 0.08) 1px, transparent 0);
@@ -547,8 +549,9 @@ body {
 
 .asw-title,
 .asw-content h3 {
-  font-family: 'Clash Display', 'Space Grotesk', 'Inter', system-ui, sans-serif;
-  letter-spacing: -0.015em;
+  font-family: 'Instrument Serif', Georgia, serif;
+  letter-spacing: -0.01em;
+  font-weight: 400;
 }
 
 .asw-content h3 {
