@@ -12,6 +12,8 @@
 - [[decisions]] — 5 keputusan yang jangan diulang
 - [[arsitektur]] — peta `client/` `server/` `api/` `supabase-*.sql`
 - [[env-setup]] — stack hemat + skill + tools (caveman/ponytail/rtk/headroom)
+- [[aturan-opencode]] — MCP global, API keys, aturan sesi (wajib baca sekali)
+- [[templates/sesi]] — template hasil sesi + `scripts/catet.sh` buat auto-simpan
 - [[landing-anti-slop]] — changelog landing realistis
 - [[daily/2026-09-14|Hari ini]] — log harian
 
