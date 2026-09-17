@@ -1,102 +1,37 @@
-import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
-import {
-  MessageSquareText, FileText, Shuffle, BookOpen, Layers, HelpCircle, ArrowUpRight,
-} from 'lucide-react';
+import { Search, FileText, Edit3, Quote, Layers, HelpCircle } from 'lucide-react';
 
-const PH = '/FOTO%20UNTUK%20LEANDING%20PAGE';
-
-const SLIDES = [
-  {
-    no: '01', icon: MessageSquareText, title: 'Tanya AI',
-    desc: 'Chat streaming Gemini Flash. Tanya konsep, minta contoh soal, bedah jurnal — Bahasa Indonesia, riwayat per akun.',
-    to: '/chat', cta: 'Buka Tanya AI',
-    img: 'hero-diskusi.jpg', alt: 'Diskusi di kampus',
-    spec: 'IN: pertanyaan → OUT: jawaban + sumber saran',
-  },
-  {
-    no: '02', icon: FileText, title: 'Rangkumin',
-    desc: 'Diktat panjang jadi poin kunci per topik. Gaya: bullet / singkat / detail.',
-    to: '/rangkumin', cta: 'Buka Rangkumin',
-    img: 'catatan.jpg', alt: 'Catatan kuliah',
-    spec: 'IN: 30 hal PDF → OUT: 12 poin inti',
-  },
-  {
-    no: '03', icon: Shuffle, title: 'Parafrase',
-    desc: 'Tulis ulang tugas dengan diksi baru. Tiga intensitas, makna dijaga.',
-    to: '/parafrase', cta: 'Buka Parafrase',
-    img: 'meja-belajar.jpg', alt: 'Meja belajar',
-    spec: 'IN: 1.200 kata → OUT: 3 versi + cek manual',
-  },
-  {
-    no: '04', icon: BookOpen, title: 'Referensi',
-    desc: 'Sitasi APA, IEEE, Harvard, MLA. Otomatis tersimpan di akunmu.',
-    to: '/referensi', cta: 'Buka Referensi',
-    img: 'perpustakaan.jpg', alt: 'Perpustakaan',
-    spec: 'IN: judul/DOI → OUT: sitasi siap tempel',
-  },
-  {
-    no: '05', icon: Layers, title: 'Kartu Belajar',
-    desc: 'Materi jadi flashcard tanya-jawab otomatis. Balik, hafalkan, lanjut.',
-    to: '/kartu-belajar', cta: 'Buka Kartu',
-    img: 'kelompok-laptop.jpg', alt: 'Kelompok laptop',
-    spec: 'IN: ringkasan → OUT: 20 kartu Q/A',
-  },
-  {
-    no: '06', icon: HelpCircle, title: 'Quiz',
-    desc: 'Soal dari materimu sendiri + penjelasan tiap jawaban dan skor akhir.',
-    to: '/quiz', cta: 'Buka Quiz',
-    img: 'wisuda.jpg', alt: 'Wisuda',
-    spec: 'IN: materi → OUT: 15 soal + koreksi',
-  },
+const TOOLS = [
+  { n: '01', icon: Search, title: 'Tanya Dokumen Konseptual', desc: 'Eksplorasi materi kuliah rumit dengan tanya jawab berbasis isi diktat. Jawaban mengunci nomor halaman sumber.', to: '/chat', spec: ['PDF Slide Dosen / E-Book Bab 4', 'RAG Semantik & Cross-Encoding', 'Jawaban akurat + cuplikan halaman'] },
+  { n: '02', icon: FileText, title: 'Sintesis Diktat Multi-Halaman', desc: 'Kompilasi ratusan lembar modul jadi draf 3–5 halaman. Aksioma, variabel, dan argumen dosen tetap terjaga.', to: '/rangkumin', spec: ['Diktat 80 hlm / 3 PDF Terkait', 'Hierarchical Extraction', 'Ringkasan hierarkis + Glosarium'] },
+  { n: '03', icon: Edit3, title: 'Parafrase Akademik Beretika', desc: 'Ubah struktur gramatikal ragam ilmiah formal tanpa mengubah makna inti atau jebakan sinonim acak.', to: '/parafrase', spec: ['Kalimat mentah / Draft bab kajian', 'Rekonstruksi Sintaksis PUEBI', 'Ragam formal + 3 alternatif gaya'] },
+  { n: '04', icon: Quote, title: 'Penyusun Sitasi & Validasi DOI', desc: 'Format daftar pustaka instan APA 7th, IEEE, atau Harvard. Tempel link URL jurnal atau teks bibliografi.', to: '/referensi', spec: ['DOI link / Judul paper / URL', 'Metadata Resolver & Format Engine', 'Sitasi APA / BibTeX siap salin'] },
+  { n: '05', icon: Layers, title: 'Spaced-Repetition Flashcards', desc: 'Ekstraksi istilah esensial jadi tumpukan kartu flash Q&A. Ekspor ke Anki atau pelajari di tempat.', to: '/kartu-belajar', spec: ['Bab Anatomi / Teorema Algoritma', 'Algoritma Retensi Kurva Lupa', 'File .apkg + Mode Latihan'] },
+  { n: '06', icon: HelpCircle, title: 'Latihan Soal Ujian Adaptif', desc: 'Simulasi studi kasus essay & pilihan ganda HOTS lengkap dengan kunci evaluasi mandiri.', to: '/quiz', spec: ['Silabus & Kisi-Kisi UTS/UAS', 'Taksonomi Bloom L4–L6', '10 Soal Berbobot + Rubrik'] },
 ];
-
-/* Datasheet grid — anti bento generik */
-function Row({ s }) {
-  const reduce = useReducedMotion();
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const imgScale = useTransform(scrollYProgress, [0, 1], [reduce ? 1 : 1.08, 1]);
-  const Icon = s.icon;
-
-  return (
-    <div ref={ref} className="grid lg:grid-cols-[1.1fr_0.9fr] gap-5 md:gap-6 border border-app rounded-xl overflow-hidden bg-surface shadow-card">
-      <div className="p-6 md:p-7">
-        <div className="flex items-center gap-3">
-          <span className="w-9 h-9 rounded-lg bg-accent-soft border border-amber-200 flex items-center justify-center">
-            <Icon size={18} className="text-accent-deep" />
-          </span>
-          <span className="text-[12px] font-mono font-bold tracking-[0.14em] text-subtle">{s.no} — {s.title.toUpperCase()}</span>
-          <span className="ml-auto text-[11px] font-mono px-2 py-1 rounded bg-bg-subtle border border-app">/ {s.to}</span>
-        </div>
-        <h3 className="font-display font-semibold text-2xl md:text-3xl leading-none mt-4">{s.title}</h3>
-        <p className="text-muted text-[14px] leading-relaxed mt-2">{s.desc}</p>
-        <p className="mt-3 text-[11px] font-mono px-2.5 py-2 rounded bg-bg-subtle border border-app text-subtle">{s.spec}</p>
-        <Link to={s.to} className="group inline-flex items-center gap-1.5 mt-4 text-[13px] font-semibold underline decoration-amber-200 underline-offset-4 hover:decoration-accent">
-          {s.cta} <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </Link>
-      </div>
-      <div className="relative bg-bg-subtle border-t lg:border-t-0 lg:border-l border-app overflow-hidden min-h-[220px]">
-        <motion.img
-          src={`${PH}/${s.img}`}
-          alt={s.alt}
-          loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ scale: imgScale }}
-        />
-        <span className="absolute bottom-2 left-2 text-[10px] font-mono bg-black/70 text-white px-2 py-1 rounded">{s.alt} — foto asli</span>
-      </div>
-    </div>
-  );
-}
 
 export default function FeatureSlides() {
   return (
-    <div className="mt-6 grid gap-4">
-      {SLIDES.map((s) => (
-        <Row key={s.no} s={s} />
-      ))}
+    <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {TOOLS.map((t) => {
+        const Icon = t.icon;
+        return (
+          <div key={t.n} className="p-6 rounded-xl bg-surface border border-app hover:border-accent/40 transition-colors flex flex-col">
+            <div className="flex items-center justify-between mb-4">
+              <span className="w-10 h-10 rounded-lg bg-bg-subtle border border-app flex items-center justify-center"><Icon size={18} className="text-accent" /></span>
+              <span className="text-[11px] font-mono px-2 py-1 rounded bg-bg-subtle border border-app">ALAT {t.n}</span>
+            </div>
+            <h3 className="font-display font-semibold text-[17px] leading-tight">{t.title}</h3>
+            <p className="text-muted text-[13px] leading-relaxed mt-2 flex-1">{t.desc}</p>
+            <div className="mt-4 p-3 rounded-lg bg-bg-subtle border border-app font-mono text-[11px] space-y-1.5">
+              <div><span className="text-accent font-semibold">IN &gt;</span> {t.spec[0]}</div>
+              <div><span className="text-muted font-semibold">PROC &gt;</span> {t.spec[1]}</div>
+              <div><span className="text-accent font-semibold">OUT &gt;</span> {t.spec[2]}</div>
+            </div>
+            <Link to={t.to} className="mt-4 inline-flex text-[13px] font-semibold underline decoration-amber-200 underline-offset-4 hover:decoration-accent">Buka →</Link>
+          </div>
+        );
+      })}
     </div>
   );
 }
